@@ -1,0 +1,40 @@
+// Import all partials
+@require './_*.styl'
+
+.list-of-places, .list-of-photos
+  display flex
+  flex-direction row
+  flex-wrap wrap
+
+.place, .photo
+  width 500px
+  position relative
+  margin-right 15px
+
+  h1
+    position absolute
+    left 20px
+    bottom 20px
+    color #fff
+
+  img 
+    width 100%
+
+  .tools
+    position absolute
+    right 20px
+    top 40px
+
+    button:first-child
+      margin-right 15px
+
+.place-add, .photo-add
+  display flex
+  flex-direction column
+  width 400px
+  position absolute
+  right 50px
+  bottom 50px
+
+  input
+    margin-bottom 20px
