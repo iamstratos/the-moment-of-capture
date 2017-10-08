@@ -5,6 +5,7 @@ class Place extends React.Component {
     constructor() {
         super();
         this.goToPlace = this.goToPlace.bind(this);
+        this.renderTools = this.renderTools.bind(this);
     }
 
     goToPlace() {
@@ -12,18 +13,34 @@ class Place extends React.Component {
         this.context.router.transitionTo(`/place/${placeId}`)
     }
 
+
+    renderTools() {
+        const {index} = this.props;
+
+        return (
+            <div className="tools">
+                <button onClick={(e) => this.props.toggleEditPlace(e, index)}>Edit</button>
+                <button onClick={(e) => this.props.removePlace(e, index)}>Delete</button>
+            </div>
+        )
+    }
+
+
     render() {
-        const {details, index} = this.props;
+        const {details} = this.props;
 
         return (
             <div className="place" onClick={this.goToPlace}>
                 <h1 className="place-title">{details.name}</h1>
                 <p className="place-desc">{details.desc}</p>
                 <img src={details.image} alt={details.name} className="place-img"/>
-                <div className="tools">
-                    <button onClick={() => this.props.toggleEditPlace(index)}>Edit</button>
-                    <button onClick={() => this.props.removePlace(index)}>Delete</button>
-                </div>
+                
+                { 
+                    this.props.uid === this.props.owner
+                    &&
+                    this.renderTools()
+                }
+                
             </div>
         )
     }

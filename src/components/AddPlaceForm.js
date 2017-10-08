@@ -1,6 +1,8 @@
 import React from 'react';
+import firebase from '../base';
 
 class AddPlaceForm extends React.Component {
+
     createPlace(e) {
         e.preventDefault();
 
@@ -17,10 +19,35 @@ class AddPlaceForm extends React.Component {
             this.placeForm.reset();
         }
     }
+    
+    renderLogin() {
+        return (
+            <nav className="login">
+                <p>Sign in to add/edit</p>
+                <button className="twitter" onClick={() => this.props.authenticate(new firebase.auth.TwitterAuthProvider())}>Log In with Twitter</button>
+            </nav>
+        )
+    }
 
     render() {
+        const logout = <button onClick={this.props.logout}>Log Out!</button>;
+
+        if (!this.props.uid) {
+            return <div>{this.renderLogin()}</div>
+        }
+
+        if (this.props.uid !== this.props.owner) {
+            return (
+                <div>
+                    <p>Sorry, you aren't the owner of this store!</p>
+                    {logout}
+                </div>
+            )
+        }
+
         return (
             <div>
+                {logout}
                 <form ref={(input) => this.placeForm = input} className="place-add" onSubmit={(e) => this.createPlace(e)}>
                     <input ref={(input) => this.name = input} type="text" placeholder="Place name" />
                     <input ref={(input) => this.desc = input} type="text" placeholder="Place desc" />

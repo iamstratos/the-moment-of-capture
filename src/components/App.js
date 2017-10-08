@@ -14,12 +14,28 @@ class App extends React.Component {
         this.updatePlace = this.updatePlace.bind(this);
         this.removePlace = this.removePlace.bind(this);
         this.toggleEditPlace = this.toggleEditPlace.bind(this);
+        this.authHandler = this.authHandler.bind(this);
+        this.authenticate = this.authenticate.bind(this);
+        this.logout = this.logout.bind(this);
 
         this.state = {
             places: {},
             showEditPlaceForm: false,
-            editPlace: null
+            editPlace: null,
+            users: {},
+            uid: null,
+            owner: null
         };
+    }
+
+    // compoment mounts
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.authHandler({user});
+            }
+        })
     }
 
     componentWillMount() {
@@ -29,11 +45,58 @@ class App extends React.Component {
                 state: 'places'
             }    
         );
+
+        // this.usersRef = firebase.syncState(`users`
+        //     , {
+        //         context: this,
+        //         state: 'users'
+        //     }    
+        // );
     }
 
     componentWillUnmount() {
         firebase.removeBinding(this.ref);
+        // firebase.removeBinding(this.usersRef);
     }
+
+
+    // login system
+
+    authenticate(provider) {
+        firebase.auth().signInWithPopup(provider).then( (authData) => {
+            this.authHandler(authData);
+        }).catch((error) => {
+            console.log(error)
+            return;
+        });
+    }
+
+    authHandler(authData) {
+        const storeRef = firebase.database().ref('/users/');
+
+        storeRef.once('value', (snapshot) => {
+            const data = snapshot.val() || {};
+
+            if(!data.owner) {
+                storeRef.set({
+                    owner: authData.user.uid
+                });
+            }
+
+            this.setState({
+                uid: authData.user.uid
+            })
+        })
+    }
+
+    logout() {
+        firebase.auth().signOut();
+        // firebase.auth().currentUser();
+        this.setState({ uid: null });
+    }
+
+
+    // other functions 
 
     addPlace(place) {
         const places = {...this.state.places};
@@ -42,7 +105,9 @@ class App extends React.Component {
         this.setState({ places });
     }
     
-    toggleEditPlace(place) {
+    toggleEditPlace(e, place) {
+        e.stopPropagation();
+
         const isEditPlaceOpen = this.state.showEditPlaceForm;
 
         if (isEditPlaceOpen) {
@@ -64,7 +129,9 @@ class App extends React.Component {
         this.setState({ places });
     }
 
-    removePlace(key) {
+    removePlace(e, key) {
+        e.stopPropagation();
+
         const places = {...this.state.places};
         places[key] = null;
         this.setState({ places });
@@ -79,7 +146,6 @@ class App extends React.Component {
                 <Header 
                     tagline={siteTitle}
                 />
-                
                 <ul className="list-of-places">
                     {
                         Object
@@ -93,10 +159,19 @@ class App extends React.Component {
                             updatePlace={this.updatePlace}
                             removePlace={this.removePlace}
                             toggleEditPlace={this.toggleEditPlace}
+                            uid={this.state.uid}
+                            owner={this.state.users.owner}
                         />)
                     }
                 </ul>
-                <AddPlaceForm addPlace={this.addPlace} />
+                <AddPlaceForm
+                    addPlace={this.addPlace}
+                    authenticate={this.authenticate}
+                    authHandler={this.authHandler}
+                    uid={this.state.uid}
+                    logout={this.logout}
+                    owner={this.state.users.owner}
+                />
 
                 { 
                     this.state.showEditPlaceForm

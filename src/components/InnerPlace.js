@@ -9,40 +9,103 @@ class InnerPlace extends React.Component {
     constructor() {
         super();
         
-                this.addPhoto = this.addPhoto.bind(this);
-                this.updatePhoto = this.updatePhoto.bind(this);
-                this.removePhoto = this.removePhoto.bind(this);
-                this.toggleEditPhoto = this.toggleEditPhoto.bind(this);
+        this.addPhoto = this.addPhoto.bind(this);
+        this.updatePhoto = this.updatePhoto.bind(this);
+        this.removePhoto = this.removePhoto.bind(this);
+        this.toggleEditPhoto = this.toggleEditPhoto.bind(this);
+        this.authHandler = this.authHandler.bind(this);
+        this.authenticate = this.authenticate.bind(this);
+        this.logout = this.logout.bind(this);
 
         this.state = {
             places: {},
             photos: {},
-            showEditPhotoForm: false
+            showEditPhotoForm: false,
+            users: {},
+            uid: null,
+            owner: null
         }
     }
 
+    // compoment mounts
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.authHandler({user});
+            }
+        })
+    }
 
     componentWillMount() {
-        firebase.syncState(`places`
-            , {
-                context: this,
-                state: 'places'
-            }    
-        );
-
+        // this.placesRef = firebase.syncState(`places`
+        //     , {
+        //         context: this,
+        //         state: 'places'
+        //     }    
+        // );
         
-        firebase.syncState(`photos`
+        this.ref = firebase.syncState(`photos`
             , {
                 context: this,
                 state: 'photos'
             }    
         );
+
+        // this.usersRef = firebase.syncState(`users`
+        //     , {
+        //         context: this,
+        //         state: 'users'
+        //     }    
+        // );
     }
 
     componentWillUnmount() {
+        // firebase.removeBinding(this.placesRef);
         firebase.removeBinding(this.ref);
+        // firebase.removeBinding(this.usersRef);
     }
     
+
+
+    // login system
+
+    authenticate(provider) {
+        firebase.auth().signInWithPopup(provider).then( (authData) => {
+            this.authHandler(authData);
+        }).catch((error) => {
+            console.log(error)
+            return;
+        });
+    }
+
+    authHandler(authData) {
+        const storeRef = firebase.database().ref('/users/');
+
+        storeRef.once('value', (snapshot) => {
+            const data = snapshot.val() || {};
+
+            if(!data.owner) {
+                storeRef.set({
+                    owner: authData.user.uid
+                });
+            }
+
+            this.setState({
+                uid: authData.user.uid
+            })
+        })
+    }
+
+    logout() {
+        firebase.auth().signOut();
+        // firebase.auth();
+        this.setState({ uid: null });
+    }
+
+
+    // other functions 
+
     addPhoto(photo) {
         const photos = {...this.state.photos};
         const timestamp = Date.now();
@@ -100,10 +163,20 @@ class InnerPlace extends React.Component {
                             updatePhoto={this.updatePhoto}
                             removePhoto={this.removePhoto}
                             toggleEditPhoto={this.toggleEditPhoto}
+                            uid={this.state.uid}
+                            owner={this.state.users.owner}
                         />)
                     }
                 </ul>
-                <AddPhotoForm addPhoto={this.addPhoto} placeName={this.props.params.placeId} />
+                <AddPhotoForm
+                    addPhoto={this.addPhoto}
+                    placeName={this.props.params.placeId}
+                    authenticate={this.authenticate}
+                    authHandler={this.authHandler}
+                    uid={this.state.uid}
+                    logout={this.logout}
+                    owner={this.state.users.owner}
+                />
 
                 { 
                     this.state.showEditPhotoForm
