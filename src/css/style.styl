@@ -1,40 +1,126 @@
 // Import all partials
 @require './_*.styl'
 
+body
+	font-family 'PT Sans Narrow', sans-serif
+
+header
+	padding 20px 0
+	margin-bottom 40px
+	border-bottom 1px solid #EAEAEA
+
+	.back
+		position fixed
+		top 10px
+		left 10px
+		padding 20px
+		cursor pointer
+
 .list-of-places, .list-of-photos
-  display flex
-  flex-direction row
-  flex-wrap wrap
+	display flex
+	flex-direction row
+	flex-wrap wrap
 
-.place, .photo
-  width 500px
-  position relative
-  margin-right 15px
+.place
+	width 500px
+	height 500px
+	position relative
+	margin-right 15px
+	overflow hidden
+	cursor pointer
 
-  h1
-    position absolute
-    left 20px
-    bottom 20px
-    color #fff
+	h1
+		position absolute
+		left 20px
+		bottom 20px
+		color #fff
 
-  img 
-    width 100%
+	img 
+		width auto
+		height 100%
 
-  .tools
-    position absolute
-    right 20px
-    top 40px
 
-    button:first-child
-      margin-right 15px
+.tools
+	position absolute
+	right 20px
+	top 20px
+
+	button
+		border none
+		padding 2px 9px
+		background-color rgba(0, 0, 0, 0.22)
+		color #fff
+		font-size 16px
+		border-radius 1px
+		transition 0.2s background ease-out
+
+		&:hover
+			background-color rgba(0, 0, 0, 0.4)
+
+	button:first-child
+		margin-right 15px
 
 .place-add, .photo-add
-  display flex
-  flex-direction column
-  width 400px
-  position absolute
-  right 50px
-  bottom 50px
+	display flex
+	flex-direction column
+	width 400px
+	position absolute
+	right 50px
+	bottom 50px
 
-  input
-    margin-bottom 20px
+	input
+		margin-bottom 20px
+		background-color #f1f1f1
+		border none
+		padding 12px 13px
+		font-size 18px
+
+	button
+		background-color #19c78d
+		border none
+		padding 12px 13px
+		font-size 18px
+		color #fff
+		transition 0.2s background ease-out
+
+		&:hover
+			background-color #1fd497
+
+.list-of-photos
+
+	.main-photo
+		// width 55vw
+		width 100%
+		height 80vh
+		text-align center
+		position relative
+		overflow hidden
+
+		img
+			// width 100%
+			height 100%
+			width auto
+			display inline-block
+			transition 0.3s border ease-out
+			// transform scale(0.99)
+			border 10px solid #fff
+
+			&:hover
+				// box-shadow 0px 2px 20px rgba(0, 0, 0, 0.35)
+				// transform scale(1)
+				border 0px solid #fff
+
+.login, .logout
+	position fixed
+	bottom 10px
+	left 10px
+
+	button
+		border none
+		background-color transparent
+		font-size 12px
+		color #dadada
+		padding 20px
+
+		&:hover
+			color #c7c7c7

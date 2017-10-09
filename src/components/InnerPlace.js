@@ -21,7 +21,6 @@ class InnerPlace extends React.Component {
             places: {},
             photos: {},
             showEditPhotoForm: false,
-            users: {},
             uid: null,
             owner: null
         }
@@ -38,12 +37,6 @@ class InnerPlace extends React.Component {
     }
 
     componentWillMount() {
-        // this.placesRef = firebase.syncState(`places`
-        //     , {
-        //         context: this,
-        //         state: 'places'
-        //     }    
-        // );
         
         this.ref = firebase.syncState(`photos`
             , {
@@ -51,19 +44,10 @@ class InnerPlace extends React.Component {
                 state: 'photos'
             }    
         );
-
-        // this.usersRef = firebase.syncState(`users`
-        //     , {
-        //         context: this,
-        //         state: 'users'
-        //     }    
-        // );
     }
 
     componentWillUnmount() {
-        // firebase.removeBinding(this.placesRef);
         firebase.removeBinding(this.ref);
-        // firebase.removeBinding(this.usersRef);
     }
     
 
@@ -74,13 +58,13 @@ class InnerPlace extends React.Component {
         firebase.auth().signInWithPopup(provider).then( (authData) => {
             this.authHandler(authData);
         }).catch((error) => {
-            console.log(error)
+            // console.log(error)
             return;
         });
     }
 
     authHandler(authData) {
-        const storeRef = firebase.database().ref('/users/');
+        const storeRef = firebase.database().ref();
 
         storeRef.once('value', (snapshot) => {
             const data = snapshot.val() || {};
@@ -92,7 +76,8 @@ class InnerPlace extends React.Component {
             }
 
             this.setState({
-                uid: authData.user.uid
+                uid: authData.user.uid,
+                owner: data.owner || authData.user.uid
             })
         })
     }
@@ -145,8 +130,6 @@ class InnerPlace extends React.Component {
         const photos = this.state.photos;
         const photo = Object.keys(photos).filter((key) => photos[key].name === this.props.params.photoId);
 
-        console.log(photos[photo])
-
         return (
             <div>
                 <InnerHeader tagline={this.props.params.placeId} />
@@ -154,6 +137,7 @@ class InnerPlace extends React.Component {
                     {
                         Object
                         .keys(this.state.photos)
+                        .filter(key => this.state.photos[key].place === this.props.params.placeId)
                         .map(key =>
                         <MainPhoto
                             key={key}
@@ -164,7 +148,7 @@ class InnerPlace extends React.Component {
                             removePhoto={this.removePhoto}
                             toggleEditPhoto={this.toggleEditPhoto}
                             uid={this.state.uid}
-                            owner={this.state.users.owner}
+                            owner={this.state.owner}
                         />)
                     }
                 </ul>
@@ -175,7 +159,7 @@ class InnerPlace extends React.Component {
                     authHandler={this.authHandler}
                     uid={this.state.uid}
                     logout={this.logout}
-                    owner={this.state.users.owner}
+                    owner={this.state.owner}
                 />
 
                 { 

@@ -157,6 +157,8 @@ input::-moz-focus-inner {
 }
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 html {
   font-size: 62.5%;
@@ -171,6 +173,7 @@ h1 {
   text-align: center;
   font-weight: normal;
   margin: 0;
+  font-size: 30px;
 }
 h2,
 h3,
@@ -182,10 +185,25 @@ h6 {
 h2 {
   text-align: center;
   margin-top: 0;
-  margin-bottom: 2rem;
+  font-size: 22px;
 }
 h3 {
   font-size: 3rem;
+}
+body {
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+header {
+  padding: 20px 0;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eaeaea;
+}
+header .back {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 20px;
+  cursor: pointer;
 }
 .list-of-places,
 .list-of-photos {
@@ -199,31 +217,42 @@ h3 {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
-.place,
-.photo {
+.place {
   width: 500px;
+  height: 500px;
   position: relative;
   margin-right: 15px;
+  overflow: hidden;
+  cursor: pointer;
 }
-.place h1,
-.photo h1 {
+.place h1 {
   position: absolute;
   left: 20px;
   bottom: 20px;
   color: #fff;
 }
-.place img,
-.photo img {
-  width: 100%;
+.place img {
+  width: auto;
+  height: 100%;
 }
-.place .tools,
-.photo .tools {
+.tools {
   position: absolute;
   right: 20px;
-  top: 40px;
+  top: 20px;
 }
-.place .tools button:first-child,
-.photo .tools button:first-child {
+.tools button {
+  border: none;
+  padding: 2px 9px;
+  background-color: rgba(0,0,0,0.22);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 1px;
+  transition: 0.2s background ease-out;
+}
+.tools button:hover {
+  background-color: rgba(0,0,0,0.4);
+}
+.tools button:first-child {
   margin-right: 15px;
 }
 .place-add,
@@ -243,4 +272,56 @@ h3 {
 .place-add input,
 .photo-add input {
   margin-bottom: 20px;
+  background-color: #f1f1f1;
+  border: none;
+  padding: 12px 13px;
+  font-size: 18px;
+}
+.place-add button,
+.photo-add button {
+  background-color: #19c78d;
+  border: none;
+  padding: 12px 13px;
+  font-size: 18px;
+  color: #fff;
+  transition: 0.2s background ease-out;
+}
+.place-add button:hover,
+.photo-add button:hover {
+  background-color: #1fd497;
+}
+.list-of-photos .main-photo {
+  width: 100%;
+  height: 80vh;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.list-of-photos .main-photo img {
+  height: 100%;
+  width: auto;
+  display: inline-block;
+  transition: 0.3s border ease-out;
+  border: 10px solid #fff;
+}
+.list-of-photos .main-photo img:hover {
+  border: 0px solid #fff;
+}
+.login,
+.logout {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+.login button,
+.logout button {
+  border: none;
+  background-color: transparent;
+  font-size: 12px;
+  color: #dadada;
+  padding: 20px;
+}
+.login button:hover,
+.logout button:hover {
+  color: #c7c7c7;
 }

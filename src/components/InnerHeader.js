@@ -1,13 +1,31 @@
 import React from 'react';
 
 
-const InnerHeader = (props) => {
-    return (
-       <header>
-           <h2 className="innerheader-city-title">{props.tagline}</h2>
-       </header>
-    )
+
+class InnerHeader extends React.Component {
+    constructor() {
+        super();
+        this.goToPlace = this.goToPlace.bind(this);
+    }
+
+    goToPlace() {
+        this.context.router.transitionTo(`/`);
+    }
+
+    render() {
+        return (
+           <header>
+               <div className="back" onClick={this.goToPlace}>
+                   <img src={require('../css/images/back-arrow.svg')} alt="back" />
+               </div>
+               <h2 className="innerheader-city-title">{this.props.tagline}</h2>
+           </header>
+        )
+    }
 }
 
+InnerHeader.contextTypes = {
+    router: React.PropTypes.object
+}
 
 export default InnerHeader;

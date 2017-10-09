@@ -36,7 +36,7 @@ class Place extends React.Component {
                 <img src={details.image} alt={details.name} className="place-img"/>
                 
                 { 
-                    this.props.uid === this.props.owner
+                    (this.props.uid === this.props.owner && this.props.uid)
                     &&
                     this.renderTools()
                 }

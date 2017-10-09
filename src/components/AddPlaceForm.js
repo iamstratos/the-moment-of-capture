@@ -23,14 +23,13 @@ class AddPlaceForm extends React.Component {
     renderLogin() {
         return (
             <nav className="login">
-                <p>Sign in to add/edit</p>
-                <button className="twitter" onClick={() => this.props.authenticate(new firebase.auth.TwitterAuthProvider())}>Log In with Twitter</button>
+                <button className="twitter" onClick={() => this.props.authenticate(new firebase.auth.TwitterAuthProvider())}>Log In</button>
             </nav>
         )
     }
 
     render() {
-        const logout = <button onClick={this.props.logout}>Log Out!</button>;
+        const logout = <div className="logout"><button onClick={this.props.logout}>Log Out!</button></div>;
 
         if (!this.props.uid) {
             return <div>{this.renderLogin()}</div>

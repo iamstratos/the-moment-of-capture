@@ -22,7 +22,6 @@ class App extends React.Component {
             places: {},
             showEditPlaceForm: false,
             editPlace: null,
-            users: {},
             uid: null,
             owner: null
         };
@@ -45,18 +44,10 @@ class App extends React.Component {
                 state: 'places'
             }    
         );
-
-        // this.usersRef = firebase.syncState(`users`
-        //     , {
-        //         context: this,
-        //         state: 'users'
-        //     }    
-        // );
     }
 
     componentWillUnmount() {
         firebase.removeBinding(this.ref);
-        // firebase.removeBinding(this.usersRef);
     }
 
 
@@ -66,25 +57,26 @@ class App extends React.Component {
         firebase.auth().signInWithPopup(provider).then( (authData) => {
             this.authHandler(authData);
         }).catch((error) => {
-            console.log(error)
+            // console.log(error)
             return;
         });
     }
 
     authHandler(authData) {
-        const storeRef = firebase.database().ref('/users/');
+        const rootRef = firebase.database().ref();
 
-        storeRef.once('value', (snapshot) => {
+        rootRef.once('value', (snapshot) => {
             const data = snapshot.val() || {};
 
             if(!data.owner) {
-                storeRef.set({
+                rootRef.set({
                     owner: authData.user.uid
                 });
             }
 
             this.setState({
-                uid: authData.user.uid
+                uid: authData.user.uid,
+                owner: data.owner || authData.user.uid
             })
         })
     }
@@ -138,7 +130,7 @@ class App extends React.Component {
     }
 
     render () {
-        const siteTitle = "The moment of capture";
+        const siteTitle = "THE MOMENT OF CAPTURE";
 
         return (
             <div>
@@ -160,7 +152,7 @@ class App extends React.Component {
                             removePlace={this.removePlace}
                             toggleEditPlace={this.toggleEditPlace}
                             uid={this.state.uid}
-                            owner={this.state.users.owner}
+                            owner={this.state.owner}
                         />)
                     }
                 </ul>
@@ -170,7 +162,7 @@ class App extends React.Component {
                     authHandler={this.authHandler}
                     uid={this.state.uid}
                     logout={this.logout}
-                    owner={this.state.users.owner}
+                    owner={this.state.owner}
                 />
 
                 { 

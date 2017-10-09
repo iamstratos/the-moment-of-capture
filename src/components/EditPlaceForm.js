@@ -7,7 +7,7 @@ class EditPlaceForm extends React.Component {
         const place = this.props.editPlace;
 
         const updatedPlace = {
-            ...place,
+            
             [e.target.name]: e.target.value
         }
         this.props.updatePlace(place, updatedPlace);
