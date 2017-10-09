@@ -19,7 +19,7 @@ class EditPhotoForm extends React.Component {
 
         return (
             <div>
-                <form className="photo-edit">
+                <form className="photo-edit add-edit-form">
                     <input name="name" ref={(input) => this.name = input} defaultValue={this.props.photos[photo].name} type="text" placeholder="Photo name" onChange={(e) => this.handleChange(e)} />
                     <input name="credit" ref={(input) => this.credit = input} defaultValue={this.props.photos[photo].credit} type="text" placeholder="Photo credit" onChange={(e) => this.handleChange(e)} />
                     <input name="image" ref={(input) => this.image = input} defaultValue={this.props.photos[photo].image} type="text" placeholder="Photo image" onChange={(e) => this.handleChange(e)} />

@@ -2,6 +2,15 @@ import React from 'react';
 import firebase from '../base';
 
 class AddPhotoForm extends React.Component {
+    constructor() {
+        super();
+        this.toggleShowAddPhoto = this.toggleShowAddPhoto.bind(this);
+        
+        this.state = {
+            showAddPhoto: true
+        }
+    }
+
     createPhoto(e) {
         e.preventDefault();
 
@@ -21,6 +30,17 @@ class AddPhotoForm extends React.Component {
         }
     }
 
+    toggleShowAddPhoto() {
+        const showAddPhoto = this.state.showAddPhoto;
+
+        if (showAddPhoto)
+        {
+            this.setState({ showAddPhoto: false })
+        } else {
+            this.setState({ showAddPhoto: true })
+        }
+    }
+
     renderLogin() {
         return (
             <nav className="login">
@@ -29,8 +49,10 @@ class AddPhotoForm extends React.Component {
         )
     }
 
+    
     render() {
         const logout = <div className="logout"><button onClick={this.props.logout}>Log Out!</button></div>;
+        const showAddPhoto = <div className="show-add-photo"><button onClick={this.toggleShowAddPhoto}>Add photo</button></div>;
 
         if (!this.props.uid) {
             return <div>{this.renderLogin()}</div>
@@ -48,14 +70,19 @@ class AddPhotoForm extends React.Component {
         return (
             <div>
                 {logout}
-                <form ref={(input) => this.photoForm = input} className="photo-add" onSubmit={(e) => this.createPhoto(e)}>
-                    <input ref={(input) => this.name = input} type="text" placeholder="Photo name" />
-                    <input ref={(input) => this.credit = input} type="text" placeholder="Photo credit" />
-                    <input ref={(input) => this.image = input} type="text" placeholder="Photo image" />
-                    <input ref={(input) => this.sound = input} type="text" placeholder="Photo sound" />
-                    <input ref={(input) => this.place = input} defaultValue={this.props.placeName} type="text" placeholder="Photo place" />
-                    <button type="submit">Add Photo</button>
-                </form>
+                {showAddPhoto}
+                {
+                    this.state.showAddPhoto
+                    &&
+                    <form ref={(input) => this.photoForm = input} className="photo-add add-edit-form" onSubmit={(e) => this.createPhoto(e)}>
+                        <input ref={(input) => this.name = input} type="text" placeholder="Photo name" />
+                        <input ref={(input) => this.credit = input} type="text" placeholder="Photo credit" />
+                        <input ref={(input) => this.image = input} type="text" placeholder="Photo image" />
+                        <input ref={(input) => this.sound = input} type="text" placeholder="Photo sound" />
+                        <input ref={(input) => this.place = input} defaultValue={this.props.placeName} type="text" placeholder="Photo place" />
+                        <button type="submit">Add Photo</button>
+                    </form>
+                }
             </div>
         )
     }

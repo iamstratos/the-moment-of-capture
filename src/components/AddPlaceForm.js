@@ -47,7 +47,7 @@ class AddPlaceForm extends React.Component {
         return (
             <div>
                 {logout}
-                <form ref={(input) => this.placeForm = input} className="place-add" onSubmit={(e) => this.createPlace(e)}>
+                <form ref={(input) => this.placeForm = input} className="place-add add-edit-form" onSubmit={(e) => this.createPlace(e)}>
                     <input ref={(input) => this.name = input} type="text" placeholder="Place name" />
                     <input ref={(input) => this.desc = input} type="text" placeholder="Place desc" />
                     <input ref={(input) => this.image = input} type="text" placeholder="Place image" />

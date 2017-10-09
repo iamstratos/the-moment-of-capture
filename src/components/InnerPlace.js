@@ -84,7 +84,6 @@ class InnerPlace extends React.Component {
 
     logout() {
         firebase.auth().signOut();
-        // firebase.auth();
         this.setState({ uid: null });
     }
 
@@ -127,8 +126,8 @@ class InnerPlace extends React.Component {
     }
 
     render() {
-        const photos = this.state.photos;
-        const photo = Object.keys(photos).filter((key) => photos[key].name === this.props.params.photoId);
+        // const photos = this.state.photos;
+        // const photo = Object.keys(photos).filter((key) => photos[key].name === this.props.params.photoId);
 
         return (
             <div>

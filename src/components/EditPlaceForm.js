@@ -19,7 +19,7 @@ class EditPlaceForm extends React.Component {
 
         return (
             <div>
-                <form className="place-edit">
+                <form className="place-edit add-edit-form">
                     <input name="name" ref={(input) => this.name = input} defaultValue={this.props.places[place].name} type="text" placeholder="Place name" onChange={(e) => this.handleChange(e)} />
                     <input name="desc" ref={(input) => this.desc = input} defaultValue={this.props.places[place].desc} type="text" placeholder="Place desc" onChange={(e) => this.handleChange(e)} />
                     <input name="image" ref={(input) => this.image = input} defaultValue={this.props.places[place].image} type="text" placeholder="Place image" onChange={(e) => this.handleChange(e)} />

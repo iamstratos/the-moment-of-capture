@@ -14,7 +14,7 @@ class InnerHeader extends React.Component {
 
     render() {
         return (
-           <header>
+           <header className="inner-header">
                <div className="back" onClick={this.goToPlace}>
                    <img src={require('../css/images/back-arrow.svg')} alt="back" />
                </div>

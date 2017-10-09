@@ -9,17 +9,31 @@ header
 	margin-bottom 40px
 	border-bottom 1px solid #EAEAEA
 
+.inner-header
+	position fixed
+	top 0px
+	left 0px
+	right 0px
+	z-index 2
+	background-color #fff
+	text-align center
+
 	.back
-		position fixed
-		top 10px
+		position absolute
+		display inline-block
+		top 5px
 		left 10px
 		padding 20px
 		cursor pointer
+
+	h2
+		display inline-block
 
 .list-of-places, .list-of-photos
 	display flex
 	flex-direction row
 	flex-wrap wrap
+
 
 .place
 	width 500px
@@ -64,9 +78,14 @@ header
 	display flex
 	flex-direction column
 	width 400px
-	position absolute
+	position fixed
 	right 50px
 	bottom 50px
+
+.add-edit-form
+	background-color rgba(29, 29, 29, 0.45)
+	padding 20px
+	border-radius 4px
 
 	input
 		margin-bottom 20px
@@ -86,31 +105,81 @@ header
 		&:hover
 			background-color #1fd497
 
+
+.main-photo-wrapper
+	width 100vw
+	height 100vh
+	display flex
+	align-items center
+	justify-content center
+
 .list-of-photos
+	width 100vw
+	height 100vh
+	overflow-x hidden
 
 	.main-photo
-		// width 55vw
-		width 100%
-		height 80vh
-		text-align center
+		width 55vw
 		position relative
 		overflow hidden
+		max-height 80vh
+		display flex
+		justify-content center
+		align-items center
+		flex-direction row
+
+		&:hover
+			cursor none
+			
+			img
+				transform scale(1)
+
+		.photo-credit
+			position absolute
+			color: #fff
+			bottom 20px
+			left 20px
+			font-size 14px
+			background-color rgba(0, 0, 0, 0.56)
+			padding 0 5px
+			text-decoration none
+			transition 0.3s opacity ease-out
+
+			&:hover
+				opacity 0.7
 
 		img
-			// width 100%
+			width 100%
 			height 100%
-			width auto
 			display inline-block
-			transition 0.3s border ease-out
-			// transform scale(0.99)
-			border 10px solid #fff
+			max-height none
+			width 100%
+			height auto
+			transform scale(0.98)
+			transition 0.3s transform ease-out
+			// border 10px solid #fff
 
 			&:hover
 				// box-shadow 0px 2px 20px rgba(0, 0, 0, 0.35)
 				// transform scale(1)
 				border 0px solid #fff
 
-.login, .logout
+.photo-edit, .place-edit
+	display flex
+	flex-direction column
+	width 400px
+	position fixed
+	left 50px
+	bottom 50px
+
+	button
+		background-color #445477
+
+		&:hover
+			background-color #475b88
+
+
+.login, .logout, .show-add-photo
 	position fixed
 	bottom 10px
 	left 10px
@@ -124,3 +193,16 @@ header
 
 		&:hover
 			color #c7c7c7
+
+.show-add-photo
+	left 100px
+
+
+// white class 
+
+body.white
+
+	header, form, button, .photo-credit
+		opacity 0
+		transition 0.2s opacity linear
+		

@@ -198,12 +198,25 @@ header {
   margin-bottom: 40px;
   border-bottom: 1px solid #eaeaea;
 }
-header .back {
+.inner-header {
   position: fixed;
-  top: 10px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2;
+  background-color: #fff;
+  text-align: center;
+}
+.inner-header .back {
+  position: absolute;
+  display: inline-block;
+  top: 5px;
   left: 10px;
   padding: 20px;
   cursor: pointer;
+}
+.inner-header h2 {
+  display: inline-block;
 }
 .list-of-places,
 .list-of-photos {
@@ -265,20 +278,23 @@ header .back {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 400px;
-  position: absolute;
+  position: fixed;
   right: 50px;
   bottom: 50px;
 }
-.place-add input,
-.photo-add input {
+.add-edit-form {
+  background-color: rgba(29,29,29,0.45);
+  padding: 20px;
+  border-radius: 4px;
+}
+.add-edit-form input {
   margin-bottom: 20px;
   background-color: #f1f1f1;
   border: none;
   padding: 12px 13px;
   font-size: 18px;
 }
-.place-add button,
-.photo-add button {
+.add-edit-form button {
   background-color: #19c78d;
   border: none;
   padding: 12px 13px;
@@ -286,35 +302,115 @@ header .back {
   color: #fff;
   transition: 0.2s background ease-out;
 }
-.place-add button:hover,
-.photo-add button:hover {
+.add-edit-form button:hover {
   background-color: #1fd497;
 }
+.main-photo-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.list-of-photos {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
 .list-of-photos .main-photo {
-  width: 100%;
-  height: 80vh;
-  text-align: center;
+  width: 55vw;
   position: relative;
   overflow: hidden;
+  max-height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.list-of-photos .main-photo:hover {
+  cursor: none;
+}
+.list-of-photos .main-photo:hover img {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.list-of-photos .main-photo .photo-credit {
+  position: absolute;
+  color: #fff;
+  bottom: 20px;
+  left: 20px;
+  font-size: 14px;
+  background-color: rgba(0,0,0,0.56);
+  padding: 0 5px;
+  text-decoration: none;
+  transition: 0.3s opacity ease-out;
+}
+.list-of-photos .main-photo .photo-credit:hover {
+  opacity: 0.7;
 }
 .list-of-photos .main-photo img {
+  width: 100%;
   height: 100%;
-  width: auto;
   display: inline-block;
-  transition: 0.3s border ease-out;
-  border: 10px solid #fff;
+  max-height: none;
+  width: 100%;
+  height: auto;
+  -webkit-transform: scale(0.98);
+          transform: scale(0.98);
+  transition: 0.3s -webkit-transform ease-out;
+  transition: 0.3s transform ease-out;
+  transition: 0.3s transform ease-out, 0.3s -webkit-transform ease-out;
 }
 .list-of-photos .main-photo img:hover {
   border: 0px solid #fff;
 }
+.photo-edit,
+.place-edit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 400px;
+  position: fixed;
+  left: 50px;
+  bottom: 50px;
+}
+.photo-edit button,
+.place-edit button {
+  background-color: #445477;
+}
+.photo-edit button:hover,
+.place-edit button:hover {
+  background-color: #475b88;
+}
 .login,
-.logout {
+.logout,
+.show-add-photo {
   position: fixed;
   bottom: 10px;
   left: 10px;
 }
 .login button,
-.logout button {
+.logout button,
+.show-add-photo button {
   border: none;
   background-color: transparent;
   font-size: 12px;
@@ -322,6 +418,17 @@ header .back {
   padding: 20px;
 }
 .login button:hover,
-.logout button:hover {
+.logout button:hover,
+.show-add-photo button:hover {
   color: #c7c7c7;
+}
+.show-add-photo {
+  left: 100px;
+}
+body.white header,
+body.white form,
+body.white button,
+body.white .photo-credit {
+  opacity: 0;
+  transition: 0.2s opacity linear;
 }
