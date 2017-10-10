@@ -444,7 +444,7 @@ body.white button,
 body.white .photo-credit {
   opacity: 0;
 }
-@media (min-width: 1450px) {
+@media (min-width: 1450px), (max-height: 930px) {
   .list-of-photos .main-photo {
     width: auto;
     height: 80vh;
