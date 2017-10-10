@@ -210,10 +210,17 @@ header {
 .inner-header .back {
   position: absolute;
   display: inline-block;
-  top: 5px;
+  top: 3px;
   left: 10px;
   padding: 20px;
   cursor: pointer;
+  transition: 0.2s -webkit-transform linear;
+  transition: 0.2s transform linear;
+  transition: 0.2s transform linear, 0.2s -webkit-transform linear;
+}
+.inner-header .back:hover {
+  -webkit-transform: translateX(-4%);
+          transform: translateX(-4%);
 }
 .inner-header h2 {
   display: inline-block;
@@ -280,7 +287,7 @@ header {
   width: 400px;
   position: fixed;
   right: 50px;
-  bottom: 50px;
+  bottom: 100px;
 }
 .add-edit-form {
   background-color: rgba(29,29,29,0.45);
@@ -327,7 +334,6 @@ header {
   width: 55vw;
   position: relative;
   overflow: hidden;
-  max-height: 80vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -343,7 +349,7 @@ header {
           flex-direction: row;
 }
 .list-of-photos .main-photo:hover {
-  cursor: none;
+  cursor: url("./images/cursor-white.png"), auto;
 }
 .list-of-photos .main-photo:hover img {
   -webkit-transform: scale(1);
@@ -423,12 +429,28 @@ header {
   color: #c7c7c7;
 }
 .show-add-photo {
-  left: 100px;
+  right: 50px;
+  left: unset;
+}
+header,
+form,
+button,
+.photo-credit {
+  transition: 0.2s opacity linear;
 }
 body.white header,
 body.white form,
 body.white button,
 body.white .photo-credit {
   opacity: 0;
-  transition: 0.2s opacity linear;
+}
+@media (min-width: 1450px) {
+  .list-of-photos .main-photo {
+    width: auto;
+    height: 80vh;
+  }
+  .list-of-photos .main-photo img {
+    width: auto;
+    height: 100%;
+  }
 }

@@ -7,7 +7,6 @@ class EditPhotoForm extends React.Component {
         const photo = this.props.editPhoto;
 
         const updatedPhoto = {
-            ...photo,
             [e.target.name]: e.target.value
         }
         this.props.updatePhoto(photo, updatedPhoto);

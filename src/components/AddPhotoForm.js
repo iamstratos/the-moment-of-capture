@@ -75,11 +75,11 @@ class AddPhotoForm extends React.Component {
                     this.state.showAddPhoto
                     &&
                     <form ref={(input) => this.photoForm = input} className="photo-add add-edit-form" onSubmit={(e) => this.createPhoto(e)}>
-                        <input ref={(input) => this.name = input} type="text" placeholder="Photo name" />
-                        <input ref={(input) => this.credit = input} type="text" placeholder="Photo credit" />
-                        <input ref={(input) => this.image = input} type="text" placeholder="Photo image" />
-                        <input ref={(input) => this.sound = input} type="text" placeholder="Photo sound" />
-                        <input ref={(input) => this.place = input} defaultValue={this.props.placeName} type="text" placeholder="Photo place" />
+                        <input ref={(input) => this.name = input} type="text" placeholder="Got any name?" />
+                        <input ref={(input) => this.image = input} type="text" placeholder="Image link" />
+                        <input ref={(input) => this.credit = input} type="text" placeholder="Please credit" />
+                        <input ref={(input) => this.sound = input} type="text" placeholder="Add a sound" />
+                        <input ref={(input) => this.place = input} defaultValue={this.props.placeName} type="text" placeholder="City" />
                         <button type="submit">Add Photo</button>
                     </form>
                 }

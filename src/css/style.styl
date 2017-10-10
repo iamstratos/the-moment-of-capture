@@ -21,10 +21,14 @@ header
 	.back
 		position absolute
 		display inline-block
-		top 5px
+		top 3px
 		left 10px
 		padding 20px
 		cursor pointer
+		transition 0.2s transform linear
+
+		&:hover
+			transform translateX(-4%)
 
 	h2
 		display inline-block
@@ -80,7 +84,7 @@ header
 	width 400px
 	position fixed
 	right 50px
-	bottom 50px
+	bottom 100px
 
 .add-edit-form
 	background-color rgba(29, 29, 29, 0.45)
@@ -122,14 +126,15 @@ header
 		width 55vw
 		position relative
 		overflow hidden
-		max-height 80vh
+		// max-height 80vh
 		display flex
 		justify-content center
 		align-items center
 		flex-direction row
 
 		&:hover
-			cursor none
+			// cursor none
+			cursor url(./images/cursor-white.png), auto
 			
 			img
 				transform scale(1)
@@ -195,14 +200,30 @@ header
 			color #c7c7c7
 
 .show-add-photo
-	left 100px
-
+	right 50px
+	left unset
 
 // white class 
+
+header, form, button, .photo-credit
+	transition 0.2s opacity linear
 
 body.white
 
 	header, form, button, .photo-credit
 		opacity 0
-		transition 0.2s opacity linear
+		// transition 0.2s opacity linear
 		
+	
+
+@media (min-width 1450px)
+
+	.list-of-photos
+	
+		.main-photo
+			width auto
+			height 80vh
+
+			img
+				width auto
+				height 100%

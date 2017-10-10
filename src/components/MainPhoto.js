@@ -17,9 +17,18 @@ class MainPhoto extends React.Component {
 
         document.querySelector(`body`).classList.add('white');
 
+        let playPromise = this.audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+            })
+            .catch(error => {
+                return;
+            });
+        }
+
         this.setState({ mouseOver: 1 });
 
-        // let currentVolume = null;
         let i = 0;
 
         if (this.audio.volume < 1 && this.audio.volume > 0)
@@ -137,7 +146,7 @@ class MainPhoto extends React.Component {
                     
                     <a href={details.credit} title="Photo by" target="_blank" className="photo-credit">{ this.getCreditName(details.credit) }</a>
 
-                    <audio preload="none" ref={(audio) => this.audio = audio}>
+                    <audio preload ref={(audio) => this.audio = audio}>
                     <source src={details.sound} type="audio/mpeg" />
                     Your browser does not support the audio element.
                     </audio>
