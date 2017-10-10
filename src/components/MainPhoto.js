@@ -4,16 +4,17 @@ class MainPhoto extends React.Component {
     constructor() {
         super();
         this.renderTools = this.renderTools.bind(this);
-        this.mouseEnter = this.mouseEnter.bind(this);
-        this.mouseExit = this.mouseExit.bind(this);
+        this.soundPlay = this.soundPlay.bind(this);
+        this.soundPause = this.soundPause.bind(this);
         this.getCreditName = this.getCreditName.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
         this.state = {
-            mouseOver: 0 // 0 for mouseExit, 1 for mouseEnter
+            mouseOver: 0 // 0 for soundPause, 1 for soundPlay
         }
     }
 
-    mouseEnter() {
+    soundPlay() {
 
         document.querySelector(`body`).classList.add('white');
 
@@ -65,7 +66,7 @@ class MainPhoto extends React.Component {
        
     }
 
-    mouseExit() {
+    soundPause() {
 
         document.querySelector(`body`).classList.remove('white');
 
@@ -112,6 +113,19 @@ class MainPhoto extends React.Component {
         }, 70);
     }
 
+    handleClick() {
+        const isMobile = document.querySelector('html').classList.contains('mobile');
+
+        if (isMobile) {
+
+            if (this.state.mouseOver === 1) {
+                this.soundPause()
+            } else {
+                this.soundPlay()
+            }
+        }
+    }
+
     getCreditName(url) {
         const urlArr = url.split('/');
 
@@ -137,8 +151,9 @@ class MainPhoto extends React.Component {
                 <div className="main-photo">
                     
                     <img
-                        onMouseEnter={this.mouseEnter}
-                        onMouseLeave={this.mouseExit}
+                        onMouseEnter={this.soundPlay}
+                        onMouseLeave={this.soundPause}
+                        onClick={this.handleClick}
                         src={details.image}
                         alt={details.name}
                         className="main-photo"
@@ -158,6 +173,7 @@ class MainPhoto extends React.Component {
                     }
                     
                 </div>
+                
             </div>
         )
     }

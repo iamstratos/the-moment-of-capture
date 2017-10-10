@@ -454,3 +454,8 @@ body.white .photo-credit {
     height: 100%;
   }
 }
+@media (max-width: 760px) {
+  .list-of-photos .main-photo {
+    width: 85vw;
+  }
+}
